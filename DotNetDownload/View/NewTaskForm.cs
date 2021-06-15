@@ -157,9 +157,9 @@ namespace DownTest
         /// <param name="path"></param>
         private void SetRootPath(string path)
         {
-            var logfile = Environment.CurrentDirectory + "\\config\\" + "rootpath.config";
+            var savefile = System.Configuration.ConfigurationManager.AppSettings["SavePath"];
 
-            CommonFunc.WriteFile(logfile, path, false);
+            CommonFunc.WriteFile(savefile, path, false);
         }
 
         /// <summary>
@@ -168,14 +168,9 @@ namespace DownTest
         /// <returns></returns>
         private string GetRootPath()
         {
-            var logfile = Environment.CurrentDirectory + "\\config\\" + "rootpath.config";
+            var saveFile = System.Configuration.ConfigurationManager.AppSettings["SavePath"];
 
-            var path = "";
-            if (File.Exists(logfile))
-            {
-                var data = CommonFunc.ReadFile(logfile).FirstOrDefault();
-                path = data;
-            }
+            var path = saveFile;
             if (string.IsNullOrEmpty(path))
             {
                 path = @"C:\Users\Administrator\Desktop";

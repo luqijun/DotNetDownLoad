@@ -20,20 +20,21 @@ namespace DownTest
         /// <param name="rootpath">文件夹所在目录： Environment.CurrentDirectory + "\\output\\"</param>
         /// <param name="fileformat">文件名格式："数据字典_{0}.xlsx</param>
         /// <returns>返回文件路径： Environment.CurrentDirectory + "\\output\\"+"数据字典_1.xlsx</returns>
-        public static string getFileName(string rootpath, string fileformat)
+        public static string GetFileName(string rootpath, string fileformat)
         {
             if (Directory.Exists(rootpath) == false)
                 Directory.CreateDirectory(rootpath);
 
-            var filename = string.Format(fileformat, DateTime.Now.ToyyyyMMddHHmmss());
+            var filename = string.Format(fileformat, DateTime.Now.ToyyyyMMdd());
             string filepath = rootpath + filename;
-            while (File.Exists(filepath))
-            {
-                filename = string.Format(fileformat, DateTime.Now.ToyyyyMMddHHmmss());
-                filepath = rootpath + filename;
-            }
+            //while (File.Exists(filepath))
+            //{
+            //    filename = string.Format(fileformat, DateTime.Now.ToyyyyMMdd());
+            //    filepath = rootpath + filename;
+            //}
             return filepath;
         }
+
         /// <summary>
         /// 打开文件夹
         /// </summary>

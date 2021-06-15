@@ -335,7 +335,7 @@ namespace DownTest
         private void Complete()
         {
             Stream mergeFile = new FileStream(@_savePath, FileMode.Create);
-            BinaryWriter AddWriter = new BinaryWriter(mergeFile);
+            BinaryWriter addWriter = new BinaryWriter(mergeFile);
             //按序号排序
             _tempFiles.Sort();
             int i = 0;
@@ -349,16 +349,16 @@ namespace DownTest
                     //由于一个文件拆分成多个文件时，每个文件最后都会拼接上结尾符"\0"，导致总长度多出(n-1)个字符，需要需要针对前面(n-1)个文件去除最后的"\0"。
                     if (i == _tempFiles.Count)
                     {
-                        AddWriter.Write(TempReader.ReadBytes((int)fs.Length));
+                        addWriter.Write(TempReader.ReadBytes((int)fs.Length));
                     }
                     else
                     {
-                        AddWriter.Write(TempReader.ReadBytes((int)fs.Length - 1));
+                        addWriter.Write(TempReader.ReadBytes((int)fs.Length - 1));
                     }
                     TempReader.Close();
                 }
             }
-            AddWriter.Close();
+            addWriter.Close();
             //删除临时文件夹
             foreach (string file in _tempFiles)
             {

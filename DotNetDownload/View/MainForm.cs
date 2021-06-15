@@ -67,7 +67,7 @@ namespace DownTest
         {
             if (alltask.Contains(httpurl))
             {
-                WriteLog(string.Format("任务：{0}已存在！", httpurl));
+                AddLogText(string.Format("任务：{0}已存在！", httpurl));
                 return;
             }
             alltask.Add(httpurl);
@@ -98,14 +98,14 @@ namespace DownTest
         private void Btngettmppath_Click(object sender, EventArgs e)
         {
             var tmppath = System.IO.Path.GetTempPath();
-            WriteLog(tmppath);
+            AddLogText(tmppath);
         }
         #endregion
 
         #region 回调事件
         private void Usercontrol_logTask(string msg)
         {
-            WriteLog(msg);
+            AddLogText(msg);
         }
 
         private void Usercontrol_deleteTask(string httpurl, string saverootpath, string msg)
@@ -113,29 +113,19 @@ namespace DownTest
             alltask.Remove(httpurl);
             if (string.IsNullOrEmpty(msg) == false)
             {
-                WriteLog(msg);
+                AddLogText(msg);
             }
         }
         #endregion
 
         #region 私有方法
-
-        private void WriteLog(string msg)
+        void AddLogText(string msg)
         {
             this.txtresult.AppendText(msg + Environment.NewLine);
             this.txtresult.Select(this.txtresult.TextLength, 0);
             this.txtresult.ScrollToCaret();
-            //保存日志
-            SaveLog(msg);
+            GlobalLog.SaveLog(msg);
         }
-
-        private void SaveLog(string msg)
-        {
-            var rootpath = Environment.CurrentDirectory + "\\log\\";
-            var logfile = CommonFunc.getFileName(rootpath, "log_{0}.txt");
-            CommonFunc.WriteFile(logfile, msg);
-        }
-
         #endregion
     }
 }
